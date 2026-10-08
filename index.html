@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urna Eleitoral</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <main class="urna">
+        <section class="painel">
+            <div class="cabecalho">
+                <span class="tag">ELEIÇÃO PARA PRESIDENTE</span>
+                <span class="tag tag-secundaria">2º TURNO</span>
+            </div>
+
+            <div class="voto-box">
+                <div class="perfil-candidato">
+                    <img id="fotoCandidato" src="" alt="Foto do candidato" />
+                </div>
+
+                <div class="label">Nome</div>
+                <div id="nomeCandidato" class="nome-candidato">SEU CANDIDATO</div>
+
+                <div class="label">Partido</div>
+                <div id="partidoCandidato" class="partido-candidato">Aguardando voto</div>
+
+                <div class="numero-display">
+                    <span id="numero1">_</span>
+                    <span id="numero2">_</span>
+                </div>
+            </div>
+
+            <div class="candidatos">
+
+                <div class="linha-item">
+                    <span class="numero-candidato flavio">22</span>
+                    <img class="mini-foto" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b3/Foto_oficial_do_senador_Fl%C3%A1vio_Bolsonaro_%28v._AgSen%29_%283x4%29.jpg/500px-Foto_oficial_do_senador_Fl%C3%A1vio_Bolsonaro_%28v._AgSen%29_%283x4%29.jpg?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=thumbnail" alt="Flávio Bolsonaro" />
+                    <div>
+                        <strong>Flávio Bolsonaro</strong>
+                        <small>PL · Partido Liberal</small>
+                    </div>
+                </div>                
+                <div class="linha-item">
+                    <span class="numero-candidato lula">13</span>
+                    <img class="mini-foto" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Foto_oficial_de_Luiz_In%C3%A1cio_Lula_da_Silva_%28ombros%29_denoise.jpg/330px-Foto_oficial_de_Luiz_In%C3%A1cio_Lula_da_Silva_%28ombros%29_denoise.jpg?utm_source=pt.wikipedia.org&utm_campaign=parser&utm_content=thumbnail" alt="Lula" />
+                    <div>
+                        <strong>Luiz Inácio Lula da Silva</strong>
+                        <small>PT · Partido dos Trabalhadores</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <aside class="teclado">
+            <div class="teclado-grid">
+                <button class="botao-numero" data-numero="1">1</button>
+                <button class="botao-numero" data-numero="2">2</button>
+                <button class="botao-numero" data-numero="3">3</button>
+                <button class="botao-numero" data-numero="4">4</button>
+                <button class="botao-numero" data-numero="5">5</button>
+                <button class="botao-numero" data-numero="6">6</button>
+                <button class="botao-numero" data-numero="7">7</button>
+                <button class="botao-numero" data-numero="8">8</button>
+                <button class="botao-numero" data-numero="9">9</button>
+                <button class="botao-numero" data-numero="0">0</button>
+            </div>
+
+            <div class="acoes">
+                <button class="botao-acoes branco" id="botaoBranco">BRANCO</button>
+                <button class="botao-acoes nulo" id="botaoNulo">NULO</button>
+                <button class="botao-acoes corrige" id="botaoCorrige">CORRIGE</button>
+                <button class="botao-acoes reset" id="botaoReset">RESETAR</button>
+                <button class="botao-acoes confirma" id="botaoConfirma">CONFIRMA</button>
+            </div>
+        </aside>
+    </main>
+
+    <section class="resultado-box">
+        <div id="vitoriaBanner" class="vitoria-banner hidden">
+            <img id="vitoriaFoto" class="vitoria-foto" src="" alt="Foto do candidato vencedor" />
+            <div class="vitoria-texto">
+                <span class="vitoria-tag">VITÓRIA CONFIRMADA</span>
+                <h3 id="vitoriaNome">Candidato</h3>
+                <p id="vitoriaMensagem">A urna eletrônica celebrou a vitória do candidato com 10 votos.</p>
+            </div>
+        </div>
+
+        <h2>Resultado da votação</h2>
+        <div class="grafico-votos">
+            <div class="barra-linha">
+                <div class="linha-info"><span>Lula</span><strong id="voto13Label">0</strong></div>
+                <div class="barra"><div class="preenchimento lula-fill" id="barra13"></div></div>
+            </div>
+            <div class="barra-linha">
+                <div class="linha-info"><span>Flávio</span><strong id="voto22Label">0</strong></div>
+                <div class="barra"><div class="preenchimento flavio-fill" id="barra22"></div></div>
+            </div>
+            <div class="barra-linha">
+                <div class="linha-info"><span>Branco</span><strong id="votoBrancoLabel">0</strong></div>
+                <div class="barra"><div class="preenchimento branco-fill" id="barraBranco"></div></div>
+            </div>
+            <div class="barra-linha">
+                <div class="linha-info"><span>Nulo</span><strong id="votoNuloLabel">0</strong></div>
+                <div class="barra"><div class="preenchimento nulo-fill" id="barraNulo"></div></div>
+            </div>
+        </div>
+        <div id="resultadoVotos" class="resultado-votos">Carregando...</div>
+        <div id="mensagemStatus" class="mensagem-status">Aguardando voto.</div>
+    </section>
+
+    <script>
+        const candidatos = {
+            "13": {
+                nome: "Luiz Inácio Lula da Silva",
+                partido: "PT · Partido dos Trabalhadores",
+                foto: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Foto_oficial_de_Luiz_In%C3%A1cio_Lula_da_Silva_%28ombros%29_denoise.jpg/330px-Foto_oficial_de_Luiz_In%C3%A1cio_Lula_da_Silva_%28ombros%29_denoise.jpg?utm_source=pt.wikipedia.org&utm_campaign=parser&utm_content=thumbnail"
+            },
+            "22": {
+                nome: "Flávio Bolsonaro",
+                partido: "PL · Partido Liberal",
+                foto: "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b3/Foto_oficial_do_senador_Fl%C3%A1vio_Bolsonaro_%28v._AgSen%29_%283x4%29.jpg/500px-Foto_oficial_do_senador_Fl%C3%A1vio_Bolsonaro_%28v._AgSen%29_%283x4%29.jpg?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=thumbnail"
+            }
+        };
+
+        const estado = { voto: "" };
+
+        const fotoPadrao = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+                <rect width="240" height="240" fill="#e9eef6"/>
+                <circle cx="120" cy="92" r="46" fill="#dfe7f4"/>
+                <path d="M60 190c10-38 42-58 60-58s50 20 60 58" fill="#dfe7f4"/>
+                <text x="120" y="220" font-size="16" text-anchor="middle" fill="#4b5563" font-family="Arial, sans-serif">FOTO</text>
+            </svg>
+        `);
+
+        const nomeCandidato = document.getElementById("nomeCandidato");
+        const partidoCandidato = document.getElementById("partidoCandidato");
+        const numero1 = document.getElementById("numero1");
+        const numero2 = document.getElementById("numero2");
+        const mensagemStatus = document.getElementById("mensagemStatus");
+        const resultadoVotos = document.getElementById("resultadoVotos");
+        const fotoCandidato = document.getElementById("fotoCandidato");
+        const bannerVitoria = document.getElementById("vitoriaBanner");
+        const fotoVitoria = document.getElementById("vitoriaFoto");
+        const nomeVitoria = document.getElementById("vitoriaNome");
+        const mensagemVitoria = document.getElementById("vitoriaMensagem");
+        fotoCandidato.src = fotoPadrao;
+        fotoCandidato.alt = "Foto do candidato";
+        fotoCandidato.onerror = () => {
+            fotoCandidato.src = fotoPadrao;
+        };
+
+        function atualizarBannerVitoria(dados) {
+            const total = Number(dados.total) || 0;
+            if (total === 0) {
+                bannerVitoria.classList.add("hidden");
+                return;
+            }
+
+            const candidatosVencedores = Object.entries(dados.candidatos || {})
+                .filter(([codigo]) => ["13", "22"].includes(codigo))
+                .map(([codigo, votos]) => ({ codigo, votos: Number(votos) || 0 }))
+                .filter((item) => item.votos >= 10);
+
+            if (!candidatosVencedores.length) {
+                bannerVitoria.classList.add("hidden");
+                return;
+            }
+
+            const vencedor = candidatosVencedores.sort((a, b) => b.votos - a.votos)[0];
+            const candidato = candidatos[vencedor.codigo];
+            const nome = candidato ? candidato.nome : `Candidato ${vencedor.codigo}`;
+            const foto = candidato ? candidato.foto : fotoPadrao;
+
+            nomeVitoria.textContent = nome;
+            mensagemVitoria.textContent = `Sistema eleitoral em celebração: ${nome} venceu com ${vencedor.votos} votos e foi destacado como candidato vencedor da urna.`;
+            fotoVitoria.src = foto;
+            fotoVitoria.alt = nome;
+            bannerVitoria.classList.remove("hidden");
+        }
+
+        function atualizarDisplay() {
+            numero1.textContent = "_";
+            numero2.textContent = "_";
+            nomeCandidato.textContent = "SEU CANDIDATO";
+            partidoCandidato.textContent = "Aguardando voto";
+            fotoCandidato.src = fotoPadrao;
+            fotoCandidato.alt = "Foto do candidato";
+
+            if (!estado.voto) {
+                return;
+            }
+
+            if (estado.voto === "BRANCO") {
+                nomeCandidato.textContent = "VOTO EM BRANCO";
+                partidoCandidato.textContent = "Clique em confirmar";
+                return;
+            }
+
+            if (estado.voto === "NULO") {
+                nomeCandidato.textContent = "VOTO NULO";
+                partidoCandidato.textContent = "Clique em confirmar";
+                return;
+            }
+
+            const codigo = estado.voto.padEnd(2, "_").slice(0, 2);
+            numero1.textContent = codigo[0] || "_";
+            numero2.textContent = codigo[1] || "_";
+
+            const candidato = candidatos[estado.voto];
+            if (candidato) {
+                nomeCandidato.textContent = candidato.nome;
+                partidoCandidato.textContent = candidato.partido;
+                fotoCandidato.src = candidato.foto;
+                fotoCandidato.alt = candidato.nome;
+                fotoCandidato.onerror = () => {
+                    fotoCandidato.src = fotoPadrao;
+                    fotoCandidato.alt = candidato.nome;
+                };
+            } else {
+                nomeCandidato.textContent = "CANDIDATO INVÁLIDO";
+                partidoCandidato.textContent = "Digite outro número";
+            }
+        }
+
+        function inserirNumero(numero) {
+            if (estado.voto === "BRANCO" || estado.voto === "NULO") {
+                return;
+            }
+            if (estado.voto.length >= 2) {
+                return;
+            }
+
+            estado.voto += numero;
+            atualizarDisplay();
+        }
+
+        function limparVoto() {
+            estado.voto = "";
+            atualizarDisplay();
+        }
+
+        async function resetarVotos() {
+            try {
+                await fetch("/api/reset", { method: "POST" });
+                mensagemStatus.textContent = "Votos zerados com sucesso.";
+                await carregarResultados();
+                limparVoto();
+            } catch (erro) {
+                mensagemStatus.textContent = "Não foi possível zerar os votos.";
+                console.error(erro);
+            }
+        }
+
+        function votarBranco() {
+            estado.voto = "BRANCO";
+            atualizarDisplay();
+        }
+
+        function votarNulo() {
+            estado.voto = "NULO";
+            atualizarDisplay();
+        }
+
+        async function confirmarVoto() {
+            if (!estado.voto) {
+                mensagemStatus.textContent = "Escolha um candidato antes de confirmar.";
+                return;
+            }
+
+            try {
+                const resposta = await fetch("/api/votar", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ numero: estado.voto })
+                });
+
+                const dados = await resposta.json();
+                mensagemStatus.textContent = `Voto ${dados.voto} registrado com sucesso!`;
+                limparVoto();
+                await carregarResultados();
+            } catch (erro) {
+                mensagemStatus.textContent = "Erro ao registrar o voto. Tente novamente.";
+                console.error(erro);
+            }
+        }
+
+        async function carregarResultados() {
+            try {
+                const resposta = await fetch("/api/resultados");
+                const dados = await resposta.json();
+
+                const total = Number(dados.total) || 0;
+                const lula = Number(dados.candidatos["13"]) || 0;
+                const flavio = Number(dados.candidatos["22"]) || 0;
+                const branco = Number(dados.candidatos.BRANCO) || 0;
+                const nulo = Number(dados.candidatos.NULO) || 0;
+
+                const calcularPercentual = (valor) => total > 0 ? (valor / total) * 100 : 0;
+
+                document.getElementById("barra13").style.width = `${calcularPercentual(lula)}%`;
+                document.getElementById("barra22").style.width = `${calcularPercentual(flavio)}%`;
+                document.getElementById("barraBranco").style.width = `${calcularPercentual(branco)}%`;
+                document.getElementById("barraNulo").style.width = `${calcularPercentual(nulo)}%`;
+
+                document.getElementById("voto13Label").textContent = `${lula}`;
+                document.getElementById("voto22Label").textContent = `${flavio}`;
+                document.getElementById("votoBrancoLabel").textContent = `${branco}`;
+                document.getElementById("votoNuloLabel").textContent = `${nulo}`;
+
+                atualizarBannerVitoria(dados);
+                resultadoVotos.textContent = `Total de votos: ${total} | Lula: ${lula} | Flávio Bolsonaro: ${flavio} | Branco: ${branco} | Nulo: ${nulo}`;
+            } catch (erro) {
+                resultadoVotos.textContent = "Não foi possível consultar os resultados.";
+                console.error(erro);
+            }
+        }
+
+        document.querySelectorAll(".botao-numero").forEach((botao) => {
+            botao.addEventListener("click", () => inserirNumero(botao.dataset.numero));
+        });
+
+        document.getElementById("botaoBranco").addEventListener("click", votarBranco);
+        document.getElementById("botaoNulo").addEventListener("click", votarNulo);
+        document.getElementById("botaoCorrige").addEventListener("click", limparVoto);
+        document.getElementById("botaoReset").addEventListener("click", resetarVotos);
+        document.getElementById("botaoConfirma").addEventListener("click", confirmarVoto);
+
+        atualizarDisplay();
+        carregarResultados();
+        setInterval(carregarResultados, 3000);
+    </script>
+</body>
+</html>

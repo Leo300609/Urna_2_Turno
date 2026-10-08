@@ -1,0 +1,6 @@
+@echo off
+> .gitignore echo target/
+> .gitignore echo .idea/
+> .gitignore echo .vscode/
+> .gitignore echo *.class
+> .gitignore echo .DS_Store

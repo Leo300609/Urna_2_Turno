@@ -1,0 +1,418 @@
+:root {
+    --bg: #0d1b2a;
+    --panel: #f2f2f2;
+    --surface: #e8edf5;
+    --primary: #1a73e8;
+    --primary-dark: #0d47a1;
+    --gold: #f7c948;
+    --text: #1b1b1b;
+    --muted: #5e6472;
+    --success: #2e8b57;
+    --lula: #d0312d;
+    --bolsonaro: #2045d3;
+    --branco: #dfe7f4;
+    --nulo: #8b5e3c;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #071420 0%, #10263f 50%, #0d1b2a 100%);
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text);
+    padding: 24px;
+}
+
+.urna {
+    width: min(1100px, 100%);
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    background: rgba(255, 255, 255, 0.08);
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+}
+
+.painel {
+    background: var(--panel);
+    padding: 26px 28px 18px;
+}
+
+.cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    gap: 10px;
+}
+
+.tag {
+    display: inline-block;
+    background: var(--primary-dark);
+    color: white;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 8px 16px;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+}
+
+.tag-secundaria {
+    background: var(--gold);
+    color: var(--text);
+}
+
+.voto-box {
+    background: var(--surface);
+    border: 2px solid rgba(14, 32, 48, 0.15);
+    border-radius: 18px;
+    padding: 18px 22px;
+    min-height: 200px;
+}
+
+.perfil-candidato {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+#fotoCandidato {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #dfe7f4;
+    background: #e9eef6;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+}
+
+.label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+}
+
+.nome-candidato,
+.partido-candidato {
+    font-size: clamp(1.1rem, 2vw, 2rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    margin-bottom: 12px;
+}
+
+.partido-candidato {
+    font-size: 1rem;
+    color: var(--muted);
+}
+
+.numero-display {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    margin-top: 18px;
+}
+
+.numero-display span {
+    width: 58px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 2px solid #d0d7e2;
+    border-radius: 12px;
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--text);
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,0.08);
+}
+
+.candidatos {
+    margin-top: 20px;
+    display: grid;
+    gap: 12px;
+}
+
+.linha-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: white;
+    border: 1px solid #dfe7f4;
+    border-radius: 12px;
+    padding: 12px 16px;
+}
+
+.numero-candidato {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    background: var(--primary);
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.numero-candidato.lula {
+    background: var(--lula);
+}
+
+.numero-candidato.flavio {
+    background: var(--bolsonaro);
+}
+
+.mini-foto {
+    width: 62px;
+    height: 62px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #dfe7f4;
+}
+
+.linha-item strong,
+.linha-item small {
+    display: block;
+}
+
+.linha-item strong {
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+}
+
+.linha-item small {
+    color: var(--muted);
+}
+
+.teclado {
+    background: linear-gradient(180deg, #dde6f0, #cfe0f3);
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.teclado-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 12px;
+}
+
+.botao-numero {
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #1d2737, #101c2b);
+    color: white;
+    font-size: 2rem;
+    font-weight: 700;
+    min-height: 78px;
+    cursor: pointer;
+    transition: transform 0.14s ease, box-shadow 0.14s ease;
+    box-shadow: 0 10px 18px rgba(0,0,0,0.18);
+}
+
+.botao-numero:hover,
+.botao-acoes:hover {
+    transform: translateY(-2px);
+}
+
+.acoes {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.botao-acoes {
+    border: none;
+    border-radius: 12px;
+    min-height: 74px;
+    font-weight: 700;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: transform 0.14s ease;
+}
+
+.botao-acoes.branco {
+    background: #ffffff;
+    color: #1f2937;
+}
+
+.botao-acoes.nulo {
+    background: #d8dfe9;
+    color: #1b1b1b;
+}
+
+.botao-acoes.corrige {
+    background: #f7c948;
+    color: #1b1b1b;
+}
+
+.botao-acoes.reset {
+    background: #7f1d1d;
+    color: #fff;
+}
+
+.botao-acoes.confirma {
+    background: var(--success);
+    color: white;
+    font-size: 0.82rem;
+}
+
+.resultado-box {
+    width: min(1100px, 100%);
+    margin-top: 22px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    color: white;
+    padding: 18px 22px;
+}
+
+.vitoria-banner {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.18), rgba(59, 130, 246, 0.14));
+    border: 1px solid rgba(110, 231, 183, 0.6);
+    border-radius: 18px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 0 24px rgba(34, 197, 94, 0.22);
+}
+
+.vitoria-banner.hidden {
+    display: none;
+}
+
+.vitoria-foto {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.8);
+    box-shadow: 0 0 18px rgba(255,255,255,0.2);
+}
+
+.vitoria-texto {
+    flex: 1;
+}
+
+.vitoria-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.14);
+    color: #dfffee;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+}
+
+.vitoria-texto h3 {
+    margin: 0 0 6px;
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+.vitoria-texto p {
+    margin: 0;
+    color: #d8f3e9;
+    font-size: 0.98rem;
+    line-height: 1.45;
+}
+
+.resultado-box h2 {
+    margin: 0 0 12px;
+    font-size: 1.2rem;
+}
+
+.grafico-votos {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.barra-linha {
+    display: grid;
+    gap: 8px;
+}
+
+.linha-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: #edf4ff;
+    font-weight: 700;
+}
+
+.barra {
+    width: 100%;
+    height: 16px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.1);
+    overflow: hidden;
+}
+
+.preenchimento {
+    height: 100%;
+    width: 0;
+    border-radius: inherit;
+    transition: width 0.3s ease;
+}
+
+.lula-fill {
+    background: linear-gradient(90deg, #f87171, var(--lula));
+}
+
+.flavio-fill {
+    background: linear-gradient(90deg, #60a5fa, var(--bolsonaro));
+}
+
+.branco-fill {
+    background: linear-gradient(90deg, #f8fafc, #dfe7f4);
+}
+
+.nulo-fill {
+    background: linear-gradient(90deg, #c084fc, var(--nulo));
+}
+
+.resultado-votos,
+.mensagem-status {
+    font-size: 0.98rem;
+    line-height: 1.5;
+}
+
+.mensagem-status {
+    margin-top: 8px;
+    color: #dbeafe;
+}
+
+@media (max-width: 860px) {
+    .urna {
+        grid-template-columns: 1fr;
+    }
+
+    .teclado {
+        padding-top: 16px;
+    }
+}
+
