@@ -1,6 +1,6 @@
-@echo off
-> .gitignore echo target/
-> .gitignore echo .idea/
-> .gitignore echo .vscode/
-> .gitignore echo *.class
-> .gitignore echo .DS_Store
+target/
+.idea/
+.vscode/
+*.class
+.DS_Store
+demo/target/
